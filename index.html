@@ -1647,34 +1647,14 @@
             document.addEventListener('mouseup', handleMouseUp);
         }
 
-        // Keyboard controls
-        const keyboardMap = {
-            'a': 'C', 's': 'D', 'd': 'E', 'f': 'F', 'g': 'G', 'h': 'A', 'j': 'B',
-            'w': 'C#', 'e': 'D#', 't': 'F#', 'y': 'G#', 'u': 'A#'
-        };
-
-        let pressedKeys = new Set();
-
-        document.addEventListener('keydown', (e) => {
-            const key = e.key.toLowerCase();
-            if (keyboardMap[key] && !pressedKeys.has(key)) {
-                pressedKeys.add(key);
-                const note = keyboardMap[key];
-                const freq = getNoteFrequency(note, synthSettings.octave);
-                const keyElement = document.querySelector(`[data-note="${note}"]`);
-                playNote(freq, keyElement);
+        function handleMouseUp() {
+            if (legatoMode && legatoNote) {
+                stopNote(0); // Frequency doesn't matter in legato mode
             }
-        });
+        }
 
-        document.addEventListener('keyup', (e) => {
-            const key = e.key.toLowerCase();
-            if (keyboardMap[key]) {
-                pressedKeys.delete(key);
-                const note = keyboardMap[key];
-                const freq = getNoteFrequency(note, synthSettings.octave);
-                stopNote(freq);
-            }
-        });
+        // Computer keyboard controls disabled for 3-octave keyboard
+        // (With 3 octaves displayed, keyboard mapping becomes ambiguous)
 
         // Control updates
         function setWaveform(type) {
