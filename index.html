@@ -489,12 +489,10 @@
         }
 
         .keyboard {
-            display: flex;
-            justify-content: center;
             position: relative;
             height: 200px;
             margin: 20px auto;
-            max-width: 900px;
+            max-width: 500px;
             background: rgba(0, 0, 0, 0.5);
             padding: 20px;
             border: 3px solid #00ffff;
@@ -503,7 +501,7 @@
         }
 
         .key {
-            position: relative;
+            position: absolute;
             cursor: pointer;
             user-select: none;
             transition: all 0.05s;
@@ -521,7 +519,6 @@
             background: linear-gradient(180deg, #ffffff 0%, #e0e0e0 100%);
             border: 2px solid #000;
             border-radius: 0 0 5px 5px;
-            margin: 0 2px;
             box-shadow: 0 5px 10px rgba(0,0,0,0.3);
             z-index: 1;
         }
@@ -643,94 +640,6 @@
             👁️ You are visitor number: <span id="visitorCount" class="blinking">000042069</span> 👁️
         </div>
 
-        <div class="profile-section neon-border">
-            <h2>✿ About Me ✿</h2>
-            <div class="profile-pic neon-border" title="That's me! Click for surprise!">
-                <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#ff00ff;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#00ffff;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <circle cx="100" cy="100" r="90" fill="url(#grad)" />
-                    <circle cx="70" cy="80" r="10" fill="#000" />
-                    <circle cx="130" cy="80" r="10" fill="#000" />
-                    <path d="M 60 130 Q 100 150 140 130" stroke="#000" stroke-width="3" fill="none" />
-                    <text x="100" y="60" text-anchor="middle" font-size="20" fill="#ffff00">✨</text>
-                </svg>
-            </div>
-            <table class="info-table">
-                <tr>
-                    <td>Name:</td>
-                    <td>CyberAngel (but u can call me Angel 😇)</td>
-                </tr>
-                <tr>
-                    <td>Location:</td>
-                    <td>The Internet (aka my basement)</td>
-                </tr>
-                <tr>
-                    <td>Status:</td>
-                    <td class="blinking">✨ ONLINE ✨</td>
-                </tr>
-                <tr>
-                    <td>Mood:</td>
-                    <td>~*~Randomly Random~*~</td>
-                </tr>
-                <tr>
-                    <td>Interests:</td>
-                    <td>HTML, CSS, Butterfly GIFs, ANIME, Linkin Park, AIM, ICQ</td>
-                </tr>
-                <tr>
-                    <td>Favorite Quote:</td>
-                    <td>"rawr means i love u in dinosaur xD"</td>
-                </tr>
-                <tr>
-                    <td>AIM Screen Name:</td>
-                    <td>xxCyberAngel05xx</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="music-player">
-            <h3 style="color: #ffff00; text-shadow: 2px 2px #ff00ff;">
-                <span class="music-note">♪</span> Now Playing <span class="music-note">♫</span>
-            </h3>
-            <p style="color: #00ffff;" id="musicStatus">Loading sick beats...</p>
-            <button class="post-button" onclick="toggleMusic()" style="margin-top: 10px;" id="musicToggle">
-                🔊 Pause Music
-            </button>
-        </div>
-
-        <div class="profile-section neon-border">
-            <h2>★ My Top 8 Friends ★</h2>
-            <div class="friends-grid">
-                <div class="friend-box" onclick="showMessage('Tom')">Tom<br>(#1)</div>
-                <div class="friend-box" onclick="showMessage('xXSkaterBoi99Xx')">xXSkater<br>Boi99Xx</div>
-                <div class="friend-box" onclick="showMessage('PinkPrincess')">Pink<br>Princess</div>
-                <div class="friend-box" onclick="showMessage('l33tH4x0r')">l33t<br>H4x0r</div>
-                <div class="friend-box" onclick="showMessage('EmoKid2000')">EmoKid<br>2000</div>
-                <div class="friend-box" onclick="showMessage('RaverGurl')">Raver<br>Gurl</div>
-                <div class="friend-box" onclick="showMessage('NinjaWarrior')">Ninja<br>Warrior</div>
-                <div class="friend-box" onclick="showMessage('AnimeQueen')">Anime<br>Queen</div>
-            </div>
-        </div>
-
-        <div class="comment-section neon-border">
-            <h2 style="color: #00ffff; text-shadow: 2px 2px #ff00ff, 0 0 15px #00ffff;">💬 Leave a Comment! 💬</h2>
-            <input type="text" class="comment-box" id="commentName" placeholder="Your name..." style="height: 40px;">
-            <textarea class="comment-box" id="commentText" rows="4" placeholder="Drop me a line! No h8rs plz..."></textarea>
-            <button class="post-button" onclick="postComment()">Post Comment!</button>
-            <div id="comments" style="margin-top: 20px;">
-                <div class="comment">
-                    <span class="comment-author">Tom:</span> Thanks for the add! Check out my new band! 🎸
-                </div>
-                <div class="comment">
-                    <span class="comment-author">xXSkaterBoi99Xx:</span> ur profile is so kewl!!! plz sign my guestbook 2!! 🛹
-                </div>
-            </div>
-        </div>
-
         <div class="synth-container neon-border">
             <h2>🎹 CyberAngel's Synth Station 3000 🎹</h2>
             
@@ -823,6 +732,94 @@
             <p style="color: #00ffff; text-align: center; margin-top: 20px; text-shadow: 1px 1px #ff00ff;">
                 🎵 Click keys or use keyboard: A-K for white keys, W E T Y U for black keys 🎵
             </p>
+        </div>
+
+        <div class="profile-section neon-border">
+            <h2>✿ About Me ✿</h2>
+            <div class="profile-pic neon-border" title="That's me! Click for surprise!">
+                <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff00ff;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#00ffff;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="100" cy="100" r="90" fill="url(#grad)" />
+                    <circle cx="70" cy="80" r="10" fill="#000" />
+                    <circle cx="130" cy="80" r="10" fill="#000" />
+                    <path d="M 60 130 Q 100 150 140 130" stroke="#000" stroke-width="3" fill="none" />
+                    <text x="100" y="60" text-anchor="middle" font-size="20" fill="#ffff00">✨</text>
+                </svg>
+            </div>
+            <table class="info-table">
+                <tr>
+                    <td>Name:</td>
+                    <td>CyberAngel (but u can call me Angel 😇)</td>
+                </tr>
+                <tr>
+                    <td>Location:</td>
+                    <td>The Internet (aka my basement)</td>
+                </tr>
+                <tr>
+                    <td>Status:</td>
+                    <td class="blinking">✨ ONLINE ✨</td>
+                </tr>
+                <tr>
+                    <td>Mood:</td>
+                    <td>~*~Randomly Random~*~</td>
+                </tr>
+                <tr>
+                    <td>Interests:</td>
+                    <td>HTML, CSS, Butterfly GIFs, ANIME, Linkin Park, AIM, ICQ</td>
+                </tr>
+                <tr>
+                    <td>Favorite Quote:</td>
+                    <td>"rawr means i love u in dinosaur xD"</td>
+                </tr>
+                <tr>
+                    <td>AIM Screen Name:</td>
+                    <td>xxCyberAngel05xx</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="music-player">
+            <h3 style="color: #ffff00; text-shadow: 2px 2px #ff00ff;">
+                <span class="music-note">♪</span> Now Playing <span class="music-note">♫</span>
+            </h3>
+            <p style="color: #00ffff;" id="musicStatus">Loading sick beats...</p>
+            <button class="post-button" onclick="toggleMusic()" style="margin-top: 10px;" id="musicToggle">
+                🔊 Pause Music
+            </button>
+        </div>
+
+        <div class="profile-section neon-border">
+            <h2>★ My Top 8 Friends ★</h2>
+            <div class="friends-grid">
+                <div class="friend-box" onclick="showMessage('Tom')">Tom<br>(#1)</div>
+                <div class="friend-box" onclick="showMessage('xXSkaterBoi99Xx')">xXSkater<br>Boi99Xx</div>
+                <div class="friend-box" onclick="showMessage('PinkPrincess')">Pink<br>Princess</div>
+                <div class="friend-box" onclick="showMessage('l33tH4x0r')">l33t<br>H4x0r</div>
+                <div class="friend-box" onclick="showMessage('EmoKid2000')">EmoKid<br>2000</div>
+                <div class="friend-box" onclick="showMessage('RaverGurl')">Raver<br>Gurl</div>
+                <div class="friend-box" onclick="showMessage('NinjaWarrior')">Ninja<br>Warrior</div>
+                <div class="friend-box" onclick="showMessage('AnimeQueen')">Anime<br>Queen</div>
+            </div>
+        </div>
+
+        <div class="comment-section neon-border">
+            <h2 style="color: #00ffff; text-shadow: 2px 2px #ff00ff, 0 0 15px #00ffff;">💬 Leave a Comment! 💬</h2>
+            <input type="text" class="comment-box" id="commentName" placeholder="Your name..." style="height: 40px;">
+            <textarea class="comment-box" id="commentText" rows="4" placeholder="Drop me a line! No h8rs plz..."></textarea>
+            <button class="post-button" onclick="postComment()">Post Comment!</button>
+            <div id="comments" style="margin-top: 20px;">
+                <div class="comment">
+                    <span class="comment-author">Tom:</span> Thanks for the add! Check out my new band! 🎸
+                </div>
+                <div class="comment">
+                    <span class="comment-author">xXSkaterBoi99Xx:</span> ur profile is so kewl!!! plz sign my guestbook 2!! 🛹
+                </div>
+            </div>
         </div>
 
         <div class="footer">
@@ -960,7 +957,6 @@
             const keyboard = document.getElementById('keyboard');
             keyboard.innerHTML = '';
             
-            const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
             const whiteNotes = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
             const blackNotes = ['C#', 'D#', 'F#', 'G#', 'A#'];
             const keyMap = {
@@ -968,16 +964,17 @@
                 'C#': 'W', 'D#': 'E', 'F#': 'T', 'G#': 'Y', 'A#': 'U'
             };
             
-            let whiteKeyIndex = 0;
+            const whiteKeyWidth = 60;
+            const whiteKeySpacing = 2;
             
             // Create white keys first
-            whiteNotes.forEach(note => {
+            whiteNotes.forEach((note, index) => {
                 const key = document.createElement('div');
                 key.className = 'key white-key';
                 key.dataset.note = note;
                 key.dataset.freq = getNoteFrequency(note, synthSettings.octave);
                 key.innerHTML = `<span>${keyMap[note]}</span>`;
-                key.style.left = (whiteKeyIndex * 64) + 'px';
+                key.style.left = (index * (whiteKeyWidth + whiteKeySpacing)) + 'px';
                 
                 key.addEventListener('mousedown', () => {
                     playNote(parseFloat(key.dataset.freq), key);
@@ -992,18 +989,29 @@
                 });
                 
                 keyboard.appendChild(key);
-                whiteKeyIndex++;
             });
             
-            // Create black keys positioned over white keys
-            const blackKeyPositions = [0, 1, 3, 4, 5]; // Positions relative to white keys
-            blackNotes.forEach((note, index) => {
+            // Create black keys positioned between white keys
+            // Black keys go between: C-D, D-E, F-G, G-A, A-B
+            const blackKeyMap = {
+                'C#': 0,  // Between C (0) and D (1)
+                'D#': 1,  // Between D (1) and E (2)
+                'F#': 3,  // Between F (3) and G (4)
+                'G#': 4,  // Between G (4) and A (5)
+                'A#': 5   // Between A (5) and B (6)
+            };
+            
+            blackNotes.forEach(note => {
                 const key = document.createElement('div');
                 key.className = 'key black-key';
                 key.dataset.note = note;
                 key.dataset.freq = getNoteFrequency(note, synthSettings.octave);
                 key.innerHTML = `<span>${keyMap[note]}</span>`;
-                key.style.left = (blackKeyPositions[index] * 64 + 44) + 'px';
+                
+                // Position black key between the two white keys
+                const whiteKeyPosition = blackKeyMap[note];
+                const offset = (whiteKeyWidth + whiteKeySpacing) * whiteKeyPosition + whiteKeyWidth - 20;
+                key.style.left = offset + 'px';
                 
                 key.addEventListener('mousedown', () => {
                     playNote(parseFloat(key.dataset.freq), key);
@@ -1305,24 +1313,6 @@
                 createElevatorMusic();
             }
         }
-        
-        // Auto-start music after user interaction (browsers require user gesture)
-        let musicStarted = false;
-        function tryStartMusic() {
-            if (!musicStarted) {
-                musicStarted = true;
-                // Add small delay to ensure interaction is registered
-                setTimeout(() => {
-                    createElevatorMusic();
-                }, 100);
-                document.removeEventListener('click', tryStartMusic);
-                document.removeEventListener('keydown', tryStartMusic);
-            }
-        }
-        
-        // Wait for first user interaction to start music
-        document.addEventListener('click', tryStartMusic, { once: true });
-        document.addEventListener('keydown', tryStartMusic, { once: true });
 
         // Enhanced sparkle effect on mouse move
         document.addEventListener('mousemove', function(e) {
