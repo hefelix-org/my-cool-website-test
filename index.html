@@ -24,10 +24,37 @@
             100% { background-position: 200px 200px; }
         }
 
+        @keyframes rainbowText {
+            0% { color: #ff0000; text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000; }
+            16% { color: #ff7f00; text-shadow: 0 0 10px #ff7f00, 0 0 20px #ff7f00; }
+            33% { color: #ffff00; text-shadow: 0 0 10px #ffff00, 0 0 20px #ffff00; }
+            50% { color: #00ff00; text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; }
+            66% { color: #0000ff; text-shadow: 0 0 10px #0000ff, 0 0 20px #0000ff; }
+            83% { color: #8b00ff; text-shadow: 0 0 10px #8b00ff, 0 0 20px #8b00ff; }
+            100% { color: #ff0000; text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
         .container {
             max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
+            animation: slideIn 1s ease-out;
         }
 
         .header {
@@ -47,10 +74,12 @@
 
         .header h1 {
             color: #ffffff;
-            text-shadow: 3px 3px #ff00ff, -3px -3px #00ffff, 0 0 10px #ffff00;
+            text-shadow: 3px 3px #ff00ff, -3px -3px #00ffff, 0 0 10px #ffff00, 0 0 20px #ff00ff, 0 0 30px #00ffff;
             font-size: 2.5em;
             margin-bottom: 10px;
-            animation: textFloat 3s ease-in-out infinite;
+            animation: textFloat 3s ease-in-out infinite, rainbowText 3s linear infinite, pulse 2s ease-in-out infinite;
+            font-weight: bold;
+            letter-spacing: 3px;
         }
 
         @keyframes textFloat {
@@ -91,11 +120,12 @@
 
         .profile-section h2 {
             color: #00ffff;
-            text-shadow: 2px 2px #ff00ff;
+            text-shadow: 2px 2px #ff00ff, 0 0 15px #00ffff, 0 0 25px #ff00ff;
             border-bottom: 2px dotted #ffff00;
             padding-bottom: 10px;
             margin-bottom: 15px;
             font-size: 1.8em;
+            animation: shake 5s ease-in-out infinite;
         }
 
         .profile-pic {
@@ -250,12 +280,68 @@
 
         @keyframes sparkleFloat {
             0% {
-                transform: translateY(0) scale(1);
+                transform: translateY(0) scale(1) rotate(0deg);
                 opacity: 1;
             }
             100% {
-                transform: translateY(-100px) scale(0);
+                transform: translateY(-100px) scale(0) rotate(360deg);
                 opacity: 0;
+            }
+        }
+
+        .glitter {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            animation: glitterFall 3s linear forwards;
+        }
+
+        @keyframes glitterFall {
+            0% {
+                transform: translateY(-10px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .laser {
+            position: fixed;
+            height: 2px;
+            pointer-events: none;
+            background: linear-gradient(90deg, transparent, #ff00ff, #00ffff, transparent);
+            animation: laserSweep 2s ease-in-out;
+            box-shadow: 0 0 10px #ff00ff;
+        }
+
+        @keyframes laserSweep {
+            0% {
+                width: 0;
+                opacity: 1;
+            }
+            50% {
+                width: 100%;
+                opacity: 1;
+            }
+            100% {
+                width: 0;
+                opacity: 0;
+            }
+        }
+
+        .neon-border {
+            animation: neonPulse 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes neonPulse {
+            0% {
+                box-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff, 0 0 15px #ff00ff, 0 0 20px #00ffff;
+            }
+            100% {
+                box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 40px #ff00ff;
             }
         }
 
@@ -263,7 +349,7 @@
             text-align: center;
             padding: 20px;
             color: #00ffff;
-            text-shadow: 1px 1px #ff00ff;
+            text-shadow: 1px 1px #ff00ff, 0 0 10px #00ffff;
         }
 
         a {
@@ -297,9 +383,9 @@
             👁️ You are visitor number: <span id="visitorCount" class="blinking">000042069</span> 👁️
         </div>
 
-        <div class="profile-section">
+        <div class="profile-section neon-border">
             <h2>✿ About Me ✿</h2>
-            <div class="profile-pic" title="That's me! Click for surprise!">
+            <div class="profile-pic neon-border" title="That's me! Click for surprise!">
                 <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -357,7 +443,7 @@
             <audio id="musicPlayer"></audio>
         </div>
 
-        <div class="profile-section">
+        <div class="profile-section neon-border">
             <h2>★ My Top 8 Friends ★</h2>
             <div class="friends-grid">
                 <div class="friend-box" onclick="showMessage('Tom')">Tom<br>(#1)</div>
@@ -371,8 +457,8 @@
             </div>
         </div>
 
-        <div class="comment-section">
-            <h2 style="color: #00ffff; text-shadow: 2px 2px #ff00ff;">💬 Leave a Comment! 💬</h2>
+        <div class="comment-section neon-border">
+            <h2 style="color: #00ffff; text-shadow: 2px 2px #ff00ff, 0 0 15px #00ffff;">💬 Leave a Comment! 💬</h2>
             <input type="text" class="comment-box" id="commentName" placeholder="Your name..." style="height: 40px;">
             <textarea class="comment-box" id="commentText" rows="4" placeholder="Drop me a line! No h8rs plz..."></textarea>
             <button class="post-button" onclick="postComment()">Post Comment!</button>
@@ -401,21 +487,61 @@
     </div>
 
     <script>
-        // Sparkle effect on mouse move
+        // Enhanced sparkle effect on mouse move
         document.addEventListener('mousemove', function(e) {
-            if (Math.random() > 0.9) {
+            if (Math.random() > 0.85) {
                 createSparkle(e.pageX, e.pageY);
+            }
+            // Add glitter trail
+            if (Math.random() > 0.95) {
+                createGlitter(e.pageX, e.pageY);
             }
         });
 
         function createSparkle(x, y) {
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
-            sparkle.textContent = ['✨', '⭐', '💫', '🌟'][Math.floor(Math.random() * 4)];
+            sparkle.textContent = ['✨', '⭐', '💫', '🌟', '💖', '🦋', '🌈', '💎'][Math.floor(Math.random() * 8)];
             sparkle.style.left = x + 'px';
             sparkle.style.top = y + 'px';
+            sparkle.style.fontSize = (Math.random() * 20 + 15) + 'px';
             document.body.appendChild(sparkle);
             setTimeout(() => sparkle.remove(), 2000);
+        }
+
+        function createGlitter(x, y) {
+            const glitter = document.createElement('div');
+            glitter.className = 'glitter';
+            glitter.style.left = x + 'px';
+            glitter.style.top = y + 'px';
+            glitter.style.background = ['#ff00ff', '#00ffff', '#ffff00', '#ff0000', '#00ff00'][Math.floor(Math.random() * 5)];
+            glitter.style.boxShadow = `0 0 10px ${glitter.style.background}`;
+            glitter.style.borderRadius = '50%';
+            glitter.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            document.body.appendChild(glitter);
+            setTimeout(() => glitter.remove(), 3000);
+        }
+
+        // Continuous glitter rain
+        setInterval(() => {
+            const x = Math.random() * window.innerWidth;
+            createGlitter(x, 0);
+        }, 300);
+
+        // Random laser sweeps
+        setInterval(() => {
+            if (Math.random() > 0.7) {
+                createLaser();
+            }
+        }, 3000);
+
+        function createLaser() {
+            const laser = document.createElement('div');
+            laser.className = 'laser';
+            laser.style.top = (Math.random() * window.innerHeight) + 'px';
+            laser.style.left = '0';
+            document.body.appendChild(laser);
+            setTimeout(() => laser.remove(), 2000);
         }
 
         // Visitor counter animation
@@ -425,7 +551,7 @@
             document.getElementById('visitorCount').textContent = String(count).padStart(9, '0');
         }, 3000);
 
-        // Comment posting
+        // Comment posting with EXTRA BLING
         function postComment() {
             const name = document.getElementById('commentName').value || 'Anonymous';
             const text = document.getElementById('commentText').value;
@@ -438,13 +564,21 @@
             const commentDiv = document.createElement('div');
             commentDiv.className = 'comment';
             commentDiv.innerHTML = `<span class="comment-author">${escapeHtml(name)}:</span> ${escapeHtml(text)}`;
+            commentDiv.style.animation = 'slideIn 0.5s ease-out';
             
             document.getElementById('comments').insertBefore(commentDiv, document.getElementById('comments').firstChild);
             
             document.getElementById('commentName').value = '';
             document.getElementById('commentText').value = '';
             
-            createSparkle(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+            // Celebration sparkles!
+            for(let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    createSparkle(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+                    createGlitter(Math.random() * window.innerWidth, 0);
+                }, i * 100);
+            }
+            createLaser();
             alert('Comment posted! thx 4 signing!! ^_^');
         }
 
@@ -454,7 +588,7 @@
             return div.innerHTML;
         }
 
-        // Friend click messages
+        // Friend click messages with BLING
         function showMessage(friend) {
             const messages = [
                 `${friend} is totally ur BFF! 💕`,
@@ -464,20 +598,46 @@
                 `${friend} thinks ur profile is rad!`
             ];
             alert(messages[Math.floor(Math.random() * messages.length)]);
-            createSparkle(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
-        }
-
-        // Profile pic click
-        document.querySelector('.profile-pic').addEventListener('click', function() {
-            alert('✨ ~*~ U found the secret! U R now officially 1337! ~*~ ✨');
-            for(let i = 0; i < 20; i++) {
+            // Mini sparkle burst
+            for(let i = 0; i < 10; i++) {
                 setTimeout(() => {
                     createSparkle(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
-                }, i * 100);
+                }, i * 50);
             }
+            createLaser();
+        }
+
+        // Profile pic click - MEGA BLING EXPLOSION
+        document.querySelector('.profile-pic').addEventListener('click', function() {
+            alert('✨ ~*~ U found the secret! U R now officially 1337! ~*~ ✨');
+            // Sparkle explosion
+            for(let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    createSparkle(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+                }, i * 50);
+            }
+            // Glitter explosion
+            for(let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    createGlitter(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+                }, i * 70);
+            }
+            // Laser show
+            for(let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    createLaser();
+                }, i * 200);
+            }
+            // Flash the screen
+            document.body.style.animation = 'none';
+            document.body.style.background = '#ffffff';
+            setTimeout(() => {
+                document.body.style.background = '';
+                document.body.style.animation = 'bgScroll 20s linear infinite';
+            }, 100);
         });
 
-        // Music player (using Web Audio API to generate a simple tone)
+        // Music player with MEGA VISUAL EFFECTS
         function playMusic() {
             const audioContext = new (window.AudioContext || window.webkitAudioContext)();
             const oscillator = audioContext.createOscillator();
@@ -493,10 +653,23 @@
             oscillator.start(audioContext.currentTime);
             oscillator.stop(audioContext.currentTime + 1);
             
+            // MUSIC VISUALIZER EFFECT
+            for(let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    createSparkle(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+                    createGlitter(Math.random() * window.innerWidth, 0);
+                }, i * 30);
+            }
+            
+            // Rapid laser show
+            for(let i = 0; i < 5; i++) {
+                setTimeout(() => createLaser(), i * 200);
+            }
+            
             alert('🎵 Imagine epic 2000s music playing here! 🎵');
         }
 
-        // Konami code easter egg
+        // Konami code easter egg with ULTIMATE BLING
         let konamiCode = [];
         const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
         
@@ -506,8 +679,40 @@
                 konamiCode.shift();
             }
             if (konamiCode.join(',') === konamiSequence.join(',')) {
+                // ULTIMATE BLING OVERLOAD
                 document.body.style.transform = 'rotate(180deg)';
-                alert('🎮 KONAMI CODE ACTIVATED! 🎮 Refresh to fix! lol');
+                document.body.style.animation = 'shake 0.5s infinite, pulse 1s infinite';
+                
+                // Massive sparkle storm
+                for(let i = 0; i < 100; i++) {
+                    setTimeout(() => {
+                        createSparkle(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+                        createGlitter(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+                    }, i * 30);
+                }
+                
+                // Laser light show
+                for(let i = 0; i < 20; i++) {
+                    setTimeout(() => createLaser(), i * 100);
+                }
+                
+                alert('🎮 KONAMI CODE ACTIVATED! 🎮 MAXIMUM BLING ENGAGED! Refresh to fix! lol');
+            }
+        });
+
+        // Click anywhere for random effects
+        document.addEventListener('click', function(e) {
+            if (Math.random() > 0.7) {
+                createSparkle(e.pageX, e.pageY);
+            }
+        });
+
+        // Page load celebration
+        window.addEventListener('load', function() {
+            for(let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    createSparkle(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+                }, i * 100);
             }
         });
     </script>
