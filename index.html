@@ -3,10 +3,513 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Cool Website</title>
+    <title>~*xX_CyberAngel2005_Xx*~'s MySpace</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+            background: #000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:rgb(138,43,226);stop-opacity:0.3"/><stop offset="50%" style="stop-color:rgb(0,191,255);stop-opacity:0.3"/><stop offset="100%" style="stop-color:rgb(255,20,147);stop-opacity:0.3"/></linearGradient></defs><rect width="200" height="200" fill="url(%23g1)"/><circle cx="20" cy="20" r="2" fill="white" opacity="0.8"/><circle cx="80" cy="40" r="1" fill="yellow" opacity="0.6"/><circle cx="150" cy="30" r="2" fill="pink" opacity="0.7"/><circle cx="40" cy="100" r="1" fill="cyan" opacity="0.8"/><circle cx="170" cy="150" r="2" fill="white" opacity="0.6"/><circle cx="120" cy="180" r="1" fill="yellow" opacity="0.8"/></svg>');
+            color: #ff00ff;
+            overflow-x: hidden;
+            animation: bgScroll 20s linear infinite;
+        }
+
+        @keyframes bgScroll {
+            0% { background-position: 0 0; }
+            100% { background-position: 200px 200px; }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);
+            border: 3px solid #ffff00;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 20px #ff00ff, inset 0 0 20px rgba(255,255,255,0.3);
+            animation: borderGlow 2s infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        @keyframes borderGlow {
+            0% { box-shadow: 0 0 20px #ff00ff, inset 0 0 20px rgba(255,255,255,0.3); }
+            100% { box-shadow: 0 0 40px #00ffff, inset 0 0 30px rgba(255,255,255,0.5); }
+        }
+
+        .header h1 {
+            color: #ffffff;
+            text-shadow: 3px 3px #ff00ff, -3px -3px #00ffff, 0 0 10px #ffff00;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            animation: textFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes textFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .marquee-container {
+            background: rgba(255,0,255,0.3);
+            border: 2px dashed #00ffff;
+            padding: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .marquee {
+            color: #ffff00;
+            font-weight: bold;
+            font-size: 1.2em;
+            text-shadow: 2px 2px #ff00ff;
+            white-space: nowrap;
+            animation: marquee 15s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .profile-section {
+            background: rgba(0, 0, 0, 0.7);
+            border: 3px double #ff00ff;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 0 15px #00ffff;
+        }
+
+        .profile-section h2 {
+            color: #00ffff;
+            text-shadow: 2px 2px #ff00ff;
+            border-bottom: 2px dotted #ffff00;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .profile-pic {
+            width: 200px;
+            height: 200px;
+            border: 5px solid #ff00ff;
+            box-shadow: 0 0 20px #00ffff;
+            margin: 0 auto 20px;
+            display: block;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #00ffff;
+        }
+
+        .info-table td {
+            padding: 8px;
+            border: 1px solid #ff00ff;
+        }
+
+        .info-table td:first-child {
+            color: #ffff00;
+            font-weight: bold;
+            width: 30%;
+        }
+
+        .friends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .friend-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 2px solid #ff00ff;
+            padding: 10px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .friend-box:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 20px #ffff00;
+        }
+
+        .blinking {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0; }
+        }
+
+        .visitor-counter {
+            background: rgba(255,255,0,0.2);
+            border: 2px solid #ffff00;
+            padding: 10px;
+            text-align: center;
+            color: #00ffff;
+            font-weight: bold;
+            margin: 20px 0;
+            box-shadow: 0 0 10px #ffff00;
+        }
+
+        .comment-section {
+            background: rgba(0, 0, 0, 0.7);
+            border: 3px double #00ffff;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .comment-box {
+            width: 100%;
+            padding: 10px;
+            background: #1a1a1a;
+            border: 2px solid #ff00ff;
+            color: #00ffff;
+            font-family: 'Comic Sans MS', cursive;
+            margin: 10px 0;
+            resize: vertical;
+        }
+
+        .post-button {
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            color: white;
+            border: 2px solid #ffff00;
+            padding: 10px 30px;
+            font-family: 'Comic Sans MS', cursive;
+            font-weight: bold;
+            cursor: pointer;
+            text-shadow: 1px 1px #000;
+            transition: all 0.3s;
+        }
+
+        .post-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #ffff00;
+        }
+
+        .comment {
+            background: rgba(255,0,255,0.1);
+            border-left: 3px solid #00ffff;
+            padding: 10px;
+            margin: 10px 0;
+            color: #ffffff;
+        }
+
+        .comment-author {
+            color: #ffff00;
+            font-weight: bold;
+        }
+
+        .music-player {
+            background: rgba(0,255,255,0.2);
+            border: 2px solid #00ffff;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .music-note {
+            display: inline-block;
+            font-size: 2em;
+            animation: bounce 0.5s infinite alternate;
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-15px); }
+        }
+
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            font-size: 20px;
+            animation: sparkleFloat 2s ease-out forwards;
+        }
+
+        @keyframes sparkleFloat {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #00ffff;
+            text-shadow: 1px 1px #ff00ff;
+        }
+
+        a {
+            color: #00ffff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #ffff00;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to My Cool Website!</h1>
-    <p>A cool website, yo</p>
+    <div class="container">
+        <div class="header">
+            <h1>✨~*xX_CyberAngel2005_Xx*~✨</h1>
+            <p style="color: white; text-shadow: 2px 2px #ff00ff; font-size: 1.2em;">
+                ⭐ Welcome 2 My Cyber Space ⭐
+            </p>
+        </div>
+
+        <div class="marquee-container">
+            <div class="marquee">
+                ★彡 UNDER CONSTRUCTION 彡★ This site is best viewed in Internet Explorer 6.0 ★彡 Sign my guestbook! 彡★ Online since 2005 ★彡
+            </div>
+        </div>
+
+        <div class="visitor-counter">
+            👁️ You are visitor number: <span id="visitorCount" class="blinking">000042069</span> 👁️
+        </div>
+
+        <div class="profile-section">
+            <h2>✿ About Me ✿</h2>
+            <div class="profile-pic" title="That's me! Click for surprise!">
+                <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff00ff;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#00ffff;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="100" cy="100" r="90" fill="url(#grad)" />
+                    <circle cx="70" cy="80" r="10" fill="#000" />
+                    <circle cx="130" cy="80" r="10" fill="#000" />
+                    <path d="M 60 130 Q 100 150 140 130" stroke="#000" stroke-width="3" fill="none" />
+                    <text x="100" y="60" text-anchor="middle" font-size="20" fill="#ffff00">✨</text>
+                </svg>
+            </div>
+            <table class="info-table">
+                <tr>
+                    <td>Name:</td>
+                    <td>CyberAngel (but u can call me Angel 😇)</td>
+                </tr>
+                <tr>
+                    <td>Location:</td>
+                    <td>The Internet (aka my basement)</td>
+                </tr>
+                <tr>
+                    <td>Status:</td>
+                    <td class="blinking">✨ ONLINE ✨</td>
+                </tr>
+                <tr>
+                    <td>Mood:</td>
+                    <td>~*~Randomly Random~*~</td>
+                </tr>
+                <tr>
+                    <td>Interests:</td>
+                    <td>HTML, CSS, Butterfly GIFs, ANIME, Linkin Park, AIM, ICQ</td>
+                </tr>
+                <tr>
+                    <td>Favorite Quote:</td>
+                    <td>"rawr means i love u in dinosaur xD"</td>
+                </tr>
+                <tr>
+                    <td>AIM Screen Name:</td>
+                    <td>xxCyberAngel05xx</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="music-player">
+            <h3 style="color: #ffff00; text-shadow: 2px 2px #ff00ff;">
+                <span class="music-note">♪</span> Now Playing <span class="music-note">♫</span>
+            </h3>
+            <p style="color: #00ffff;">Darude - Sandstorm (Auto-Play Disabled for Your Sanity)</p>
+            <button class="post-button" onclick="playMusic()" style="margin-top: 10px;">
+                🔊 Click to Jam!
+            </button>
+            <audio id="musicPlayer"></audio>
+        </div>
+
+        <div class="profile-section">
+            <h2>★ My Top 8 Friends ★</h2>
+            <div class="friends-grid">
+                <div class="friend-box" onclick="showMessage('Tom')">Tom<br>(#1)</div>
+                <div class="friend-box" onclick="showMessage('xXSkaterBoi99Xx')">xXSkater<br>Boi99Xx</div>
+                <div class="friend-box" onclick="showMessage('PinkPrincess')">Pink<br>Princess</div>
+                <div class="friend-box" onclick="showMessage('l33tH4x0r')">l33t<br>H4x0r</div>
+                <div class="friend-box" onclick="showMessage('EmoKid2000')">EmoKid<br>2000</div>
+                <div class="friend-box" onclick="showMessage('RaverGurl')">Raver<br>Gurl</div>
+                <div class="friend-box" onclick="showMessage('NinjaWarrior')">Ninja<br>Warrior</div>
+                <div class="friend-box" onclick="showMessage('AnimeQueen')">Anime<br>Queen</div>
+            </div>
+        </div>
+
+        <div class="comment-section">
+            <h2 style="color: #00ffff; text-shadow: 2px 2px #ff00ff;">💬 Leave a Comment! 💬</h2>
+            <input type="text" class="comment-box" id="commentName" placeholder="Your name..." style="height: 40px;">
+            <textarea class="comment-box" id="commentText" rows="4" placeholder="Drop me a line! No h8rs plz..."></textarea>
+            <button class="post-button" onclick="postComment()">Post Comment!</button>
+            <div id="comments" style="margin-top: 20px;">
+                <div class="comment">
+                    <span class="comment-author">Tom:</span> Thanks for the add! Check out my new band! 🎸
+                </div>
+                <div class="comment">
+                    <span class="comment-author">xXSkaterBoi99Xx:</span> ur profile is so kewl!!! plz sign my guestbook 2!! 🛹
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>⭐ Made with ❤️ and way too much free time ⭐</p>
+            <p>Best viewed in 1024x768 resolution</p>
+            <p class="blinking">✨ UNDER CONSTRUCTION ✨</p>
+            <p style="margin-top: 10px;">
+                <a href="#">Home</a> | 
+                <a href="#">About</a> | 
+                <a href="#">Blog</a> | 
+                <a href="#">Friends</a> | 
+                <a href="#">Contact</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Sparkle effect on mouse move
+        document.addEventListener('mousemove', function(e) {
+            if (Math.random() > 0.9) {
+                createSparkle(e.pageX, e.pageY);
+            }
+        });
+
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.textContent = ['✨', '⭐', '💫', '🌟'][Math.floor(Math.random() * 4)];
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 2000);
+        }
+
+        // Visitor counter animation
+        let count = 42069;
+        setInterval(() => {
+            count += Math.floor(Math.random() * 3);
+            document.getElementById('visitorCount').textContent = String(count).padStart(9, '0');
+        }, 3000);
+
+        // Comment posting
+        function postComment() {
+            const name = document.getElementById('commentName').value || 'Anonymous';
+            const text = document.getElementById('commentText').value;
+            
+            if (text.trim() === '') {
+                alert('u gotta write something!! >_<');
+                return;
+            }
+
+            const commentDiv = document.createElement('div');
+            commentDiv.className = 'comment';
+            commentDiv.innerHTML = `<span class="comment-author">${escapeHtml(name)}:</span> ${escapeHtml(text)}`;
+            
+            document.getElementById('comments').insertBefore(commentDiv, document.getElementById('comments').firstChild);
+            
+            document.getElementById('commentName').value = '';
+            document.getElementById('commentText').value = '';
+            
+            createSparkle(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+            alert('Comment posted! thx 4 signing!! ^_^');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Friend click messages
+        function showMessage(friend) {
+            const messages = [
+                `${friend} is totally ur BFF! 💕`,
+                `${friend} wants to chat on AIM!`,
+                `${friend} has posted new pics! Check them out!`,
+                `${friend} sent you a virtual hug! 🤗`,
+                `${friend} thinks ur profile is rad!`
+            ];
+            alert(messages[Math.floor(Math.random() * messages.length)]);
+            createSparkle(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+        }
+
+        // Profile pic click
+        document.querySelector('.profile-pic').addEventListener('click', function() {
+            alert('✨ ~*~ U found the secret! U R now officially 1337! ~*~ ✨');
+            for(let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    createSparkle(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+                }, i * 100);
+            }
+        });
+
+        // Music player (using Web Audio API to generate a simple tone)
+        function playMusic() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 440; // A note
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 1);
+            
+            alert('🎵 Imagine epic 2000s music playing here! 🎵');
+        }
+
+        // Konami code easter egg
+        let konamiCode = [];
+        const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        
+        document.addEventListener('keydown', function(e) {
+            konamiCode.push(e.key);
+            if (konamiCode.length > konamiSequence.length) {
+                konamiCode.shift();
+            }
+            if (konamiCode.join(',') === konamiSequence.join(',')) {
+                document.body.style.transform = 'rotate(180deg)';
+                alert('🎮 KONAMI CODE ACTIVATED! 🎮 Refresh to fix! lol');
+            }
+        });
+    </script>
 </body>
 </html>
