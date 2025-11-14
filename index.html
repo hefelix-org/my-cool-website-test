@@ -492,7 +492,7 @@
             position: relative;
             height: 200px;
             margin: 20px auto;
-            max-width: 500px;
+            max-width: 1300px;
             background: rgba(0, 0, 0, 0.5);
             padding: 20px;
             border: 3px solid #00ffff;
@@ -514,7 +514,7 @@
         }
 
         .white-key {
-            width: 60px;
+            width: 50px;
             height: 180px;
             background: linear-gradient(180deg, #ffffff 0%, #e0e0e0 100%);
             border: 2px solid #000;
@@ -534,7 +534,7 @@
         }
 
         .black-key {
-            width: 40px;
+            width: 35px;
             height: 120px;
             background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
             border: 2px solid #ff00ff;
@@ -1000,7 +1000,7 @@
             </div>
 
             <p style="color: #00ffff; text-align: center; margin-top: 20px; text-shadow: 1px 1px #ff00ff;">
-                🎵 Click keys or use keyboard: A-K for white keys, W E T Y U for black keys 🎵
+                🎵 Click keys to play - Now showing 3 full octaves! 🎵
             </p>
             <p style="color: #ffff00; text-align: center; margin-top: 10px; text-shadow: 1px 1px #ff00ff; font-size: 0.9em;">
                 💡 Pro tip: Click and hold to enter legato mode - drag across keys for smooth pitch bends! 💡
@@ -1534,40 +1534,56 @@
             
             const whiteNotes = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
             const blackNotes = ['C#', 'D#', 'F#', 'G#', 'A#'];
-            const keyMap = {
-                'C': 'A', 'D': 'S', 'E': 'D', 'F': 'F', 'G': 'G', 'A': 'H', 'B': 'J',
-                'C#': 'W', 'D#': 'E', 'F#': 'T', 'G#': 'Y', 'A#': 'U'
-            };
             
-            const whiteKeyWidth = 60;
+            const whiteKeyWidth = 50;
             const whiteKeySpacing = 2;
             
-            // Create white keys first
-            whiteNotes.forEach((note, index) => {
-                const key = document.createElement('div');
-                key.className = 'key white-key';
-                key.dataset.note = note;
-                key.dataset.freq = getNoteFrequency(note, synthSettings.octave);
-                key.innerHTML = `<span>${keyMap[note]}</span>`;
-                key.style.left = (index * (whiteKeyWidth + whiteKeySpacing)) + 'px';
-                
-                key.addEventListener('mousedown', (e) => {
-                    e.preventDefault();
-                    legatoMode = true;
-                    playNote(parseFloat(key.dataset.freq), key);
-                });
-                
-                key.addEventListener('mouseenter', () => {
-                    if (legatoMode) {
-                        playNote(parseFloat(key.dataset.freq), key);
-                    }
-                });
-                
-                keyboard.appendChild(key);
-            });
+            // Generate 3 octaves
+            const startOctave = synthSettings.octave;
+            const numOctaves = 3;
             
-            // Create black keys positioned between white keys
-            // Black keys go between: C-D, D-E, F-G, G-A, A-B
+            let whiteKeyIndex = 0;
+            
+            // Create white keys for all 3 octaves
+            for (let octave = 0; octave < numOctaves; octave++) {
+                const currentOctave = startOctave + octave;
+                
+                whiteNotes.forEach((note, noteIndex) => {
+                    const key = document.createElement('div');
+                    key.className = 'key white-key';
+                    key.dataset.note = note;
+                    key.dataset.octave = currentOctave;
+                    key.dataset.freq = getNoteFrequency(note, currentOctave);
+                    
+                    // Show note labels on first octave only, or show octave number on C notes
+                    if (note === 'C') {
+                        key.innerHTML = `<span style="font-size: 0.7em;">${note}${currentOctave}</span>`;
+                    } else if (octave === 0) {
+                        key.innerHTML = `<span style="font-size: 0.8em;">${note}</span>`;
+                    } else {
+                        key.innerHTML = `<span style="font-size: 0.7em; opacity: 0.5;">${note}</span>`;
+                    }
+                    
+                    key.style.left = (whiteKeyIndex * (whiteKeyWidth + whiteKeySpacing)) + 'px';
+                    
+                    key.addEventListener('mousedown', (e) => {
+                        e.preventDefault();
+                        legatoMode = true;
+                        playNote(parseFloat(key.dataset.freq), key);
+                    });
+                    
+                    key.addEventListener('mouseenter', () => {
+                        if (legatoMode) {
+                            playNote(parseFloat(key.dataset.freq), key);
+                        }
+                    });
+                    
+                    keyboard.appendChild(key);
+                    whiteKeyIndex++;
+                });
+            }
+            
+            // Create black keys for all 3 octaves
             const blackKeyMap = {
                 'C#': 0,  // Between C (0) and D (1)
                 'D#': 1,  // Between D (1) and E (2)
@@ -1576,41 +1592,47 @@
                 'A#': 5   // Between A (5) and B (6)
             };
             
-            blackNotes.forEach(note => {
-                const key = document.createElement('div');
-                key.className = 'key black-key';
-                key.dataset.note = note;
-                key.dataset.freq = getNoteFrequency(note, synthSettings.octave);
-                key.innerHTML = `<span>${keyMap[note]}</span>`;
+            for (let octave = 0; octave < numOctaves; octave++) {
+                const currentOctave = startOctave + octave;
+                const octaveOffset = octave * 7; // 7 white keys per octave
                 
-                // Position black key between the two white keys
-                const whiteKeyPosition = blackKeyMap[note];
-                const offset = (whiteKeyWidth + whiteKeySpacing) * whiteKeyPosition + whiteKeyWidth - 20;
-                key.style.left = offset + 'px';
-                
-                key.addEventListener('mousedown', (e) => {
-                    e.preventDefault();
-                    legatoMode = true;
-                    playNote(parseFloat(key.dataset.freq), key);
-                });
-                
-                key.addEventListener('mouseenter', () => {
-                    if (legatoMode) {
-                        playNote(parseFloat(key.dataset.freq), key);
+                blackNotes.forEach(note => {
+                    const key = document.createElement('div');
+                    key.className = 'key black-key';
+                    key.dataset.note = note;
+                    key.dataset.octave = currentOctave;
+                    key.dataset.freq = getNoteFrequency(note, currentOctave);
+                    
+                    if (octave === 0) {
+                        key.innerHTML = `<span style="font-size: 0.7em;">${note.replace('#', '♯')}</span>`;
+                    } else {
+                        key.innerHTML = `<span style="font-size: 0.6em; opacity: 0.5;">${note.replace('#', '♯')}</span>`;
                     }
+                    
+                    // Position black key between the two white keys
+                    const whiteKeyPosition = blackKeyMap[note] + octaveOffset;
+                    const offset = (whiteKeyWidth + whiteKeySpacing) * whiteKeyPosition + whiteKeyWidth - 17.5;
+                    key.style.left = offset + 'px';
+                    
+                    key.addEventListener('mousedown', (e) => {
+                        e.preventDefault();
+                        legatoMode = true;
+                        playNote(parseFloat(key.dataset.freq), key);
+                    });
+                    
+                    key.addEventListener('mouseenter', () => {
+                        if (legatoMode) {
+                            playNote(parseFloat(key.dataset.freq), key);
+                        }
+                    });
+                    
+                    keyboard.appendChild(key);
                 });
-                
-                keyboard.appendChild(key);
-            });
+            }
             
             // Global mouseup handler to stop legato mode
+            document.removeEventListener('mouseup', handleMouseUp);
             document.addEventListener('mouseup', handleMouseUp);
-        }
-        
-        function handleMouseUp() {
-            if (legatoMode && legatoNote) {
-                stopNote(0); // Frequency doesn't matter in legato mode
-            }
         }
 
         // Keyboard controls
