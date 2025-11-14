@@ -51,7 +51,7 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
             animation: slideIn 1s ease-out;
@@ -619,9 +619,193 @@
             transform: scale(1.1) rotate(2deg);
             box-shadow: 0 0 25px #00ffff;
         }
+
+        /* ===== EASTER EGG STYLES ===== */
+        .secret-button {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 0, 255, 0.3);
+            border: 2px solid transparent;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .secret-button:hover {
+            background: rgba(255, 0, 255, 0.8);
+            border-color: #ffff00;
+            transform: scale(1.3) rotate(180deg);
+            box-shadow: 0 0 20px #ff00ff;
+        }
+
+        .floating-companion {
+            position: fixed;
+            width: 80px;
+            height: 80px;
+            font-size: 60px;
+            z-index: 999;
+            cursor: pointer;
+            user-select: none;
+            animation: floatAround 3s ease-in-out infinite;
+            transition: all 0.3s;
+        }
+
+        .floating-companion:hover {
+            transform: scale(1.3) rotate(20deg);
+        }
+
+        @keyframes floatAround {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(5deg); }
+            50% { transform: translateY(0px) rotate(-5deg); }
+            75% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        .secret-menu {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: rgba(0, 0, 0, 0.95);
+            border: 5px solid #ff00ff;
+            padding: 40px;
+            z-index: 10000;
+            box-shadow: 0 0 50px #00ffff, inset 0 0 30px rgba(255, 0, 255, 0.3);
+            transition: transform 0.5s;
+            max-width: 600px;
+            border-radius: 20px;
+        }
+
+        .secret-menu.active {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .secret-menu h2 {
+            color: #00ffff;
+            text-shadow: 0 0 20px #00ffff;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2em;
+            animation: rainbowText 3s linear infinite;
+        }
+
+        .secret-menu-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff00ff;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            display: none;
+        }
+
+        .side-decoration {
+            position: fixed;
+            top: 0;
+            width: 150px;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            background: rgba(255, 0, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .side-decoration.left {
+            left: 0;
+            border-right: 2px dashed #ff00ff;
+        }
+
+        .side-decoration.right {
+            right: 0;
+            border-left: 2px dashed #00ffff;
+        }
+
+        .side-icon {
+            font-size: 40px;
+            opacity: 0.6;
+            animation: pulse 2s ease-in-out infinite;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .side-icon:hover {
+            opacity: 1;
+            transform: scale(1.5) rotate(360deg);
+        }
+
+        @media (max-width: 1600px) {
+            .side-decoration {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Side decorations for wide screens -->
+    <div class="side-decoration left">
+        <div class="side-icon" onclick="easterEgg_sideIcon('left-1')" title="Click me!">🦋</div>
+        <div class="side-icon" onclick="easterEgg_sideIcon('left-2')" title="Click me!">⭐</div>
+        <div class="side-icon" onclick="easterEgg_sideIcon('left-3')" title="Click me!">💎</div>
+        <div class="side-icon" onclick="easterEgg_sideIcon('left-4')" title="Click me!">🌈</div>
+        <div class="side-icon" onclick="easterEgg_sideIcon('left-5')" title="Click me!">🎵</div>
+    </div>
+    <div class="side-decoration right">
+        <div class="side-icon" onclick="easterEgg_sideIcon('right-1')" title="Click me!">✨</div>
+        <div class="side-icon" onclick="easterEgg_sideIcon('right-2')" title="Click me!">🔮</div>
+        <div class="side-icon" onclick="easterEgg_sideIcon('right-3')" title="Click me!">👾</div>
+        <div class="side-icon" onclick="easterEgg_sideIcon('right-4')" title="Click me!">🎮</div>
+        <div class="side-icon" onclick="easterEgg_sideIcon('right-5')" title="Click me!">💫</div>
+    </div>
+
+    <!-- Secret buttons in corners -->
+    <div class="secret-button" style="top: 10px; left: 10px;" onclick="easterEgg_corner('topLeft')" title="???"></div>
+    <div class="secret-button" style="top: 10px; right: 10px;" onclick="easterEgg_corner('topRight')" title="???"></div>
+    <div class="secret-button" style="bottom: 10px; left: 10px;" onclick="easterEgg_corner('bottomLeft')" title="???"></div>
+    <div class="secret-button" style="bottom: 10px; right: 10px;" onclick="easterEgg_corner('bottomRight')" title="???"></div>
+
+    <!-- Floating companion -->
+    <div class="floating-companion" id="companion" style="top: 100px; right: 200px;" onclick="easterEgg_companion()">
+        🐉
+    </div>
+
+    <!-- Secret menu overlay -->
+    <div class="secret-menu" id="secretMenu">
+        <button class="secret-menu-close" onclick="closeSecretMenu()">×</button>
+        <h2>🎮 SECRET MENU UNLOCKED 🎮</h2>
+        <div style="color: #00ffff; text-align: center; line-height: 2;">
+            <p style="font-size: 1.2em; color: #ffff00;">You found the secret menu!</p>
+            <p>Easter Eggs Found: <span id="eggCounter">0</span>/10</p>
+            <button class="post-button" onclick="easterEgg_matrixMode()" style="margin: 10px;">Matrix Mode</button>
+            <button class="post-button" onclick="easterEgg_discoMode()" style="margin: 10px;">Disco Mode</button>
+            <button class="post-button" onclick="easterEgg_resetAll()" style="margin: 10px;">Reset All</button>
+        </div>
+    </div>
+
+    <!-- Matrix rain canvas -->
+    <canvas id="matrixCanvas" class="matrix-rain"></canvas>
+
     <div class="container">
         <div class="header">
             <h1>✨~*xX_CyberAngel2005_Xx*~✨</h1>
@@ -732,6 +916,9 @@
             <p style="color: #00ffff; text-align: center; margin-top: 20px; text-shadow: 1px 1px #ff00ff;">
                 🎵 Click keys or use keyboard: A-K for white keys, W E T Y U for black keys 🎵
             </p>
+            <p style="color: #ffff00; text-align: center; margin-top: 10px; text-shadow: 1px 1px #ff00ff; font-size: 0.9em;">
+                💡 Pro tip: Click and hold to enter legato mode - drag across keys for smooth pitch bends! 💡
+            </p>
         </div>
 
         <div class="profile-section neon-border">
@@ -778,7 +965,11 @@
                 </tr>
                 <tr>
                     <td>AIM Screen Name:</td>
-                    <td>xxCyberAngel05xx</td>
+                    <td><span onclick="easterEgg_aim()" style="cursor: pointer; text-decoration: underline;">xxCyberAngel05xx</span></td>
+                </tr>
+                <tr>
+                    <td>Secret Code:</td>
+                    <td><span onclick="easterEgg_secretCode()" style="cursor: pointer; color: rgba(0,255,255,0.3); text-shadow: none;">hover me...</span></td>
                 </tr>
             </table>
         </div>
@@ -831,12 +1022,234 @@
                 <a href="#">About</a> | 
                 <a href="#">Blog</a> | 
                 <a href="#">Friends</a> | 
-                <a href="#">Contact</a>
+                <a href="#" onclick="easterEgg_contact(); return false;">Contact</a>
+            </p>
+            <p style="margin-top: 15px; font-size: 0.8em; color: rgba(0,255,255,0.5);">
+                <span onclick="easterEgg_viewSource()" style="cursor: pointer;">View Source</span> | 
+                Counter: <span onclick="easterEgg_counterClick()" style="cursor: pointer;">42069</span> | 
+                <span ondblclick="easterEgg_doubleClick()" style="cursor: pointer;">© 2005</span>
             </p>
         </div>
     </div>
 
     <script>
+        // ===== EASTER EGGS SYSTEM =====
+        let easterEggsFound = new Set();
+        let companionClicks = 0;
+        let matrixActive = false;
+        let discoInterval = null;
+        let clickSequence = [];
+
+        function foundEasterEgg(name) {
+            if (!easterEggsFound.has(name)) {
+                easterEggsFound.add(name);
+                document.getElementById('eggCounter').textContent = easterEggsFound.size;
+                
+                // Celebration
+                for(let i = 0; i < 20; i++) {
+                    setTimeout(() => {
+                        createSparkle(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+                    }, i * 50);
+                }
+                
+                if (easterEggsFound.size === 10) {
+                    setTimeout(() => {
+                        alert('🎉🎉🎉 YOU FOUND ALL EASTER EGGS! 🎉🎉🎉\n\nYou are officially the most 1337 visitor ever!\n\nYour reward: ETERNAL GLORY! ✨');
+                        easterEgg_ultimateMode();
+                    }, 500);
+                }
+            }
+        }
+
+        // Easter Egg 1: Side icons
+        function easterEgg_sideIcon(id) {
+            foundEasterEgg('side-' + id);
+            alert('✨ You clicked a side icon! Keep exploring! ✨');
+        }
+
+        // Easter Egg 2: Corner buttons
+        function easterEgg_corner(corner) {
+            clickSequence.push(corner);
+            if (clickSequence.length > 4) clickSequence.shift();
+            
+            if (clickSequence.join(',') === 'topLeft,topRight,bottomRight,bottomLeft') {
+                foundEasterEgg('corner-sequence');
+                document.getElementById('secretMenu').classList.add('active');
+                clickSequence = [];
+            } else {
+                foundEasterEgg('corner-' + corner);
+            }
+        }
+
+        // Easter Egg 3: Companion
+        function easterEgg_companion() {
+            companionClicks++;
+            const companion = document.getElementById('companion');
+            const emojis = ['🐉', '🦄', '👽', '🤖', '👾', '🐲', '🦖', '🐱', '🐶', '🐼'];
+            companion.textContent = emojis[companionClicks % emojis.length];
+            
+            if (companionClicks === 5) {
+                foundEasterEgg('companion');
+                alert('🐉 The dragon is your friend now! 🐉');
+            }
+        }
+
+        // Easter Egg 4: AIM screen name
+        function easterEgg_aim() {
+            foundEasterEgg('aim');
+            alert('💬 CyberAngel is away: "AFK eating pizza lol brb" 💬');
+        }
+
+        // Easter Egg 5: Secret code
+        function easterEgg_secretCode() {
+            foundEasterEgg('secret-code');
+            alert('🔐 Secret Code: 1337-H4X0R-2005\n\nYou\'re officially l33t! 🔐');
+        }
+
+        // Easter Egg 6: Contact link
+        function easterEgg_contact() {
+            foundEasterEgg('contact');
+            alert('📧 Email: CyberAngel@aol.com\n\nJK this isn\'t real lol 😂');
+        }
+
+        // Easter Egg 7: View source
+        function easterEgg_viewSource() {
+            foundEasterEgg('view-source');
+            alert('👨‍💻 You want to see the source code?\n\nPress F12 or Ctrl+U like a real hacker! 👨‍💻');
+        }
+
+        // Easter Egg 8: Counter click
+        let counterClicks = 0;
+        function easterEgg_counterClick() {
+            counterClicks++;
+            if (counterClicks === 5) {
+                foundEasterEgg('counter');
+                alert('🎰 You clicked the counter 5 times!\n\nThe actual count is: ' + (42069 + Math.floor(Math.random() * 1000)) + ' 🎰');
+                counterClicks = 0;
+            }
+        }
+
+        // Easter Egg 9: Double click copyright
+        function easterEgg_doubleClick() {
+            foundEasterEgg('double-click');
+            alert('©️ Copyright 2005 CyberAngel Industries™\n\nAll rights reserved. Totally legit. 😎');
+        }
+
+        // Easter Egg 10: Type "angel" anywhere
+        let typedKeys = [];
+        document.addEventListener('keypress', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            
+            typedKeys.push(e.key.toLowerCase());
+            if (typedKeys.length > 5) typedKeys.shift();
+            
+            if (typedKeys.join('') === 'angel') {
+                foundEasterEgg('type-angel');
+                alert('👼 You typed "angel"! You summoned the CyberAngel! 👼');
+                typedKeys = [];
+                
+                // Summon effect
+                for(let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        createSparkle(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+                        createGlitter(Math.random() * window.innerWidth, 0);
+                    }, i * 30);
+                }
+            }
+        });
+
+        // Secret menu functions
+        function closeSecretMenu() {
+            document.getElementById('secretMenu').classList.remove('active');
+        }
+
+        function easterEgg_matrixMode() {
+            if (matrixActive) {
+                document.getElementById('matrixCanvas').style.display = 'none';
+                matrixActive = false;
+            } else {
+                document.getElementById('matrixCanvas').style.display = 'block';
+                matrixActive = true;
+                startMatrix();
+            }
+        }
+
+        function startMatrix() {
+            const canvas = document.getElementById('matrixCanvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const ctx = canvas.getContext('2d');
+            
+            const chars = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝ01234567890';
+            const fontSize = 16;
+            const columns = canvas.width / fontSize;
+            const drops = Array(Math.floor(columns)).fill(1);
+            
+            function draw() {
+                if (!matrixActive) return;
+                
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#0f0';
+                ctx.font = fontSize + 'px monospace';
+                
+                for (let i = 0; i < drops.length; i++) {
+                    const text = chars[Math.floor(Math.random() * chars.length)];
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+                
+                setTimeout(() => requestAnimationFrame(draw), 50);
+            }
+            
+            draw();
+        }
+
+        function easterEgg_discoMode() {
+            if (discoInterval) {
+                clearInterval(discoInterval);
+                discoInterval = null;
+                document.body.style.filter = 'none';
+            } else {
+                let hue = 0;
+                discoInterval = setInterval(() => {
+                    hue = (hue + 10) % 360;
+                    document.body.style.filter = `hue-rotate(${hue}deg)`;
+                }, 100);
+            }
+        }
+
+        function easterEgg_resetAll() {
+            easterEggsFound.clear();
+            document.getElementById('eggCounter').textContent = '0';
+            companionClicks = 0;
+            document.getElementById('companion').textContent = '🐉';
+            if (matrixActive) easterEgg_matrixMode();
+            if (discoInterval) easterEgg_discoMode();
+            alert('🔄 All easter eggs reset! Start hunting again! 🔄');
+        }
+
+        function easterEgg_ultimateMode() {
+            document.body.style.animation = 'shake 0.5s infinite, pulse 1s infinite, bgScroll 5s linear infinite';
+            
+            for(let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    createSparkle(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+                    createGlitter(Math.random() * window.innerWidth, 0);
+                    createLaser();
+                }, i * 50);
+            }
+            
+            setTimeout(() => {
+                document.body.style.animation = 'bgScroll 20s linear infinite';
+            }, 5000);
+        }
+
         // ===== SYNTHESIZER =====
         let synthContext;
         let synthSettings = {
