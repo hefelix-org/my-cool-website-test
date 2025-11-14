@@ -436,11 +436,10 @@
             <h3 style="color: #ffff00; text-shadow: 2px 2px #ff00ff;">
                 <span class="music-note">♪</span> Now Playing <span class="music-note">♫</span>
             </h3>
-            <p style="color: #00ffff;">Darude - Sandstorm (Auto-Play Disabled for Your Sanity)</p>
-            <button class="post-button" onclick="playMusic()" style="margin-top: 10px;">
-                🔊 Click to Jam!
+            <p style="color: #00ffff;" id="musicStatus">Loading sick beats...</p>
+            <button class="post-button" onclick="toggleMusic()" style="margin-top: 10px;" id="musicToggle">
+                🔊 Pause Music
             </button>
-            <audio id="musicPlayer"></audio>
         </div>
 
         <div class="profile-section neon-border">
@@ -487,6 +486,142 @@
     </div>
 
     <script>
+        // ===== ELEVATOR MUSIC GENERATOR =====
+        let audioContext;
+        let isPlaying = false;
+        let musicNodes = [];
+        
+        function createElevatorMusic() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Elevator music chord progression (I-vi-IV-V in C major)
+                const chords = [
+                    [261.63, 329.63, 392.00], // C major (C-E-G)
+                    [220.00, 261.63, 329.63], // A minor (A-C-E)
+                    [349.23, 440.00, 523.25], // F major (F-A-C)
+                    [392.00, 493.88, 587.33]  // G major (G-B-D)
+                ];
+                
+                // Melody notes (pentatonic scale for that smooth jazz feel)
+                const melody = [
+                    523.25, 587.33, 659.25, 783.99, 880.00, // C D E G A (higher octave)
+                    783.99, 659.25, 587.33
+                ];
+                
+                let chordIndex = 0;
+                let melodyIndex = 0;
+                
+                function playChord() {
+                    if (!isPlaying) return;
+                    
+                    const currentChord = chords[chordIndex % chords.length];
+                    const startTime = audioContext.currentTime;
+                    
+                    // Play chord notes
+                    currentChord.forEach((freq, i) => {
+                        const osc = audioContext.createOscillator();
+                        const gain = audioContext.createGain();
+                        
+                        osc.type = 'sine';
+                        osc.frequency.value = freq;
+                        
+                        gain.gain.setValueAtTime(0, startTime);
+                        gain.gain.linearRampToValueAtTime(0.08, startTime + 0.1);
+                        gain.gain.exponentialRampToValueAtTime(0.01, startTime + 2);
+                        
+                        osc.connect(gain);
+                        gain.connect(audioContext.destination);
+                        
+                        osc.start(startTime);
+                        osc.stop(startTime + 2);
+                        
+                        musicNodes.push({ osc, gain });
+                    });
+                    
+                    chordIndex++;
+                    if (isPlaying) {
+                        setTimeout(playChord, 2000);
+                    }
+                }
+                
+                function playMelody() {
+                    if (!isPlaying) return;
+                    
+                    const note = melody[melodyIndex % melody.length];
+                    const startTime = audioContext.currentTime;
+                    
+                    const osc = audioContext.createOscillator();
+                    const gain = audioContext.createGain();
+                    
+                    osc.type = 'triangle';
+                    osc.frequency.value = note;
+                    
+                    gain.gain.setValueAtTime(0, startTime);
+                    gain.gain.linearRampToValueAtTime(0.12, startTime + 0.05);
+                    gain.gain.exponentialRampToValueAtTime(0.01, startTime + 0.5);
+                    
+                    osc.connect(gain);
+                    gain.connect(audioContext.destination);
+                    
+                    osc.start(startTime);
+                    osc.stop(startTime + 0.5);
+                    
+                    musicNodes.push({ osc, gain });
+                    
+                    melodyIndex++;
+                    if (isPlaying) {
+                        setTimeout(playMelody, 500);
+                    }
+                }
+                
+                // Start the music
+                isPlaying = true;
+                playChord();
+                setTimeout(playMelody, 250); // Offset melody slightly
+                
+                document.getElementById('musicStatus').textContent = '🎵 CyberAngel\'s Chill Lounge Mix 🎵';
+                document.getElementById('musicToggle').textContent = '🔇 Pause Music';
+                
+            } catch (e) {
+                console.error('Audio context error:', e);
+                document.getElementById('musicStatus').textContent = 'Music unavailable (browser doesn\'t support it)';
+            }
+        }
+        
+        function stopElevatorMusic() {
+            isPlaying = false;
+            if (audioContext) {
+                audioContext.close();
+                audioContext = null;
+            }
+            musicNodes = [];
+            document.getElementById('musicToggle').textContent = '🔊 Play Music';
+        }
+        
+        function toggleMusic() {
+            if (isPlaying) {
+                stopElevatorMusic();
+            } else {
+                createElevatorMusic();
+            }
+        }
+        
+        // Auto-start music after user interaction (browsers require user gesture)
+        let musicStarted = false;
+        function tryStartMusic() {
+            if (!musicStarted) {
+                musicStarted = true;
+                createElevatorMusic();
+                document.removeEventListener('click', tryStartMusic);
+                document.removeEventListener('keydown', tryStartMusic);
+            }
+        }
+        
+        // Wait for first user interaction to start music
+        document.addEventListener('click', tryStartMusic);
+        document.addEventListener('keydown', tryStartMusic);
+
         // Enhanced sparkle effect on mouse move
         document.addEventListener('mousemove', function(e) {
             if (Math.random() > 0.85) {
@@ -639,19 +774,8 @@
 
         // Music player with MEGA VISUAL EFFECTS
         function playMusic() {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.value = 440; // A note
-            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 1);
+            // This is now handled by toggleMusic()
+            toggleMusic();
             
             // MUSIC VISUALIZER EFFECT
             for(let i = 0; i < 30; i++) {
@@ -665,8 +789,6 @@
             for(let i = 0; i < 5; i++) {
                 setTimeout(() => createLaser(), i * 200);
             }
-            
-            alert('🎵 Imagine epic 2000s music playing here! 🎵');
         }
 
         // Konami code easter egg with ULTIMATE BLING
