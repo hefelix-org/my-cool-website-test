@@ -855,6 +855,9 @@
         };
         let activeNotes = new Map();
         let lastFrequency = null;
+        let legatoMode = false;
+        let legatoNote = null;
+        let currentLegatoKey = null;
 
         // Initialize synth
         function initSynth() {
@@ -884,13 +887,33 @@
             
             const now = synthContext.currentTime;
             
+            // If in legato mode, update existing note
+            if (legatoMode && legatoNote) {
+                const note = legatoNote;
+                note.osc.frequency.cancelScheduledValues(now);
+                note.osc.frequency.setValueAtTime(note.osc.frequency.value, now);
+                note.osc.frequency.exponentialRampToValueAtTime(frequency, now + 0.05);
+                
+                // Update visual feedback
+                if (currentLegatoKey) {
+                    currentLegatoKey.classList.remove('playing');
+                }
+                if (keyElement) {
+                    keyElement.classList.add('playing');
+                    currentLegatoKey = keyElement;
+                }
+                
+                lastFrequency = frequency;
+                return;
+            }
+            
             // Create oscillator
             const osc = synthContext.createOscillator();
             osc.type = synthSettings.waveform;
             osc.detune.value = synthSettings.detune;
             
             // Apply glide
-            if (synthSettings.glide > 0 && lastFrequency) {
+            if (synthSettings.glide > 0 && lastFrequency && !legatoMode) {
                 osc.frequency.setValueAtTime(lastFrequency, now);
                 osc.frequency.exponentialRampToValueAtTime(frequency, now + synthSettings.glide);
             } else {
@@ -926,12 +949,43 @@
                 keyElement.classList.add('playing');
             }
             
+            const noteData = { osc, gainNode, filter, keyElement };
+            
             // Store active note
-            activeNotes.set(frequency, { osc, gainNode, filter, keyElement });
+            if (legatoMode) {
+                legatoNote = noteData;
+                currentLegatoKey = keyElement;
+            } else {
+                activeNotes.set(frequency, noteData);
+            }
+            
             lastFrequency = frequency;
         }
 
         function stopNote(frequency) {
+            // If in legato mode, stop the legato note
+            if (legatoMode && legatoNote) {
+                const note = legatoNote;
+                const now = synthContext.currentTime;
+                
+                // Apply release
+                note.gainNode.gain.cancelScheduledValues(now);
+                note.gainNode.gain.setValueAtTime(note.gainNode.gain.value, now);
+                note.gainNode.gain.linearRampToValueAtTime(0, now + synthSettings.release);
+                
+                note.osc.stop(now + synthSettings.release);
+                
+                // Remove visual feedback
+                if (currentLegatoKey) {
+                    currentLegatoKey.classList.remove('playing');
+                    currentLegatoKey = null;
+                }
+                
+                legatoNote = null;
+                legatoMode = false;
+                return;
+            }
+            
             const note = activeNotes.get(frequency);
             if (!note) return;
             
@@ -976,15 +1030,15 @@
                 key.innerHTML = `<span>${keyMap[note]}</span>`;
                 key.style.left = (index * (whiteKeyWidth + whiteKeySpacing)) + 'px';
                 
-                key.addEventListener('mousedown', () => {
+                key.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    legatoMode = true;
                     playNote(parseFloat(key.dataset.freq), key);
                 });
-                key.addEventListener('mouseup', () => {
-                    stopNote(parseFloat(key.dataset.freq));
-                });
-                key.addEventListener('mouseleave', () => {
-                    if (key.classList.contains('playing')) {
-                        stopNote(parseFloat(key.dataset.freq));
+                
+                key.addEventListener('mouseenter', () => {
+                    if (legatoMode) {
+                        playNote(parseFloat(key.dataset.freq), key);
                     }
                 });
                 
@@ -1013,20 +1067,29 @@
                 const offset = (whiteKeyWidth + whiteKeySpacing) * whiteKeyPosition + whiteKeyWidth - 20;
                 key.style.left = offset + 'px';
                 
-                key.addEventListener('mousedown', () => {
+                key.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    legatoMode = true;
                     playNote(parseFloat(key.dataset.freq), key);
                 });
-                key.addEventListener('mouseup', () => {
-                    stopNote(parseFloat(key.dataset.freq));
-                });
-                key.addEventListener('mouseleave', () => {
-                    if (key.classList.contains('playing')) {
-                        stopNote(parseFloat(key.dataset.freq));
+                
+                key.addEventListener('mouseenter', () => {
+                    if (legatoMode) {
+                        playNote(parseFloat(key.dataset.freq), key);
                     }
                 });
                 
                 keyboard.appendChild(key);
             });
+            
+            // Global mouseup handler to stop legato mode
+            document.addEventListener('mouseup', handleMouseUp);
+        }
+        
+        function handleMouseUp() {
+            if (legatoMode && legatoNote) {
+                stopNote(0); // Frequency doesn't matter in legato mode
+            }
         }
 
         // Keyboard controls
