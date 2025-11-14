@@ -760,9 +760,95 @@
                 display: none;
             }
         }
+
+        .egg-counter-display {
+            position: fixed;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            border: 3px solid #ff00ff;
+            padding: 20px 15px;
+            z-index: 1001;
+            box-shadow: 0 0 20px #00ffff, inset 0 0 10px rgba(255, 0, 255, 0.3);
+            border-radius: 10px;
+            min-width: 120px;
+            text-align: center;
+            animation: neonPulse 2s ease-in-out infinite alternate;
+        }
+
+        .egg-counter-display h3 {
+            color: #ffff00;
+            font-size: 0.9em;
+            margin: 0 0 10px 0;
+            text-shadow: 0 0 10px #ffff00;
+            letter-spacing: 1px;
+        }
+
+        .egg-counter-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #00ffff;
+            text-shadow: 0 0 15px #00ffff, 2px 2px #ff00ff;
+            margin: 10px 0;
+            font-family: 'Comic Sans MS', cursive;
+        }
+
+        .egg-counter-label {
+            color: #ff00ff;
+            font-size: 0.8em;
+            text-shadow: 1px 1px #000;
+            margin-top: 5px;
+        }
+
+        .egg-progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00ffff;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .egg-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            width: 0%;
+            transition: width 0.5s ease-out;
+            box-shadow: 0 0 10px #00ffff;
+        }
+
+        @media (max-width: 768px) {
+            .egg-counter-display {
+                left: 10px;
+                padding: 15px 10px;
+                min-width: 100px;
+            }
+            
+            .egg-counter-display h3 {
+                font-size: 0.75em;
+            }
+            
+            .egg-counter-number {
+                font-size: 1.5em;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Persistent Easter Egg Counter -->
+    <div class="egg-counter-display">
+        <h3>🥚 EGGS 🥚</h3>
+        <div class="egg-counter-number">
+            <span id="eggCounterMain">0</span><span style="color: #ffff00;">/10</span>
+        </div>
+        <div class="egg-counter-label">FOUND</div>
+        <div class="egg-progress-bar">
+            <div class="egg-progress-fill" id="eggProgressBar"></div>
+        </div>
+    </div>
+
     <!-- Side decorations for wide screens -->
     <div class="side-decoration left">
         <div class="side-icon" onclick="easterEgg_sideIcon('left-1')" title="Click me!">🦋</div>
@@ -1043,7 +1129,7 @@
         function foundEasterEgg(name) {
             if (!easterEggsFound.has(name)) {
                 easterEggsFound.add(name);
-                document.getElementById('eggCounter').textContent = easterEggsFound.size;
+                updateEggCounter();
                 
                 // Celebration
                 for(let i = 0; i < 20; i++) {
@@ -1059,6 +1145,28 @@
                     }, 500);
                 }
             }
+        }
+
+        function updateEggCounter() {
+            const count = easterEggsFound.size;
+            const total = 10;
+            const percentage = (count / total) * 100;
+            
+            // Update main counter
+            document.getElementById('eggCounterMain').textContent = count;
+            
+            // Update secret menu counter
+            document.getElementById('eggCounter').textContent = count;
+            
+            // Update progress bar
+            document.getElementById('eggProgressBar').style.width = percentage + '%';
+            
+            // Add bounce animation to counter
+            const counter = document.querySelector('.egg-counter-display');
+            counter.style.animation = 'none';
+            setTimeout(() => {
+                counter.style.animation = 'neonPulse 2s ease-in-out infinite alternate, pulse 0.5s';
+            }, 10);
         }
 
         // Easter Egg 1: Side icons
@@ -1226,7 +1334,7 @@
 
         function easterEgg_resetAll() {
             easterEggsFound.clear();
-            document.getElementById('eggCounter').textContent = '0';
+            updateEggCounter();
             companionClicks = 0;
             document.getElementById('companion').textContent = '🐉';
             if (matrixActive) easterEgg_matrixMode();
